@@ -1,0 +1,40 @@
+#!/bin/zsh
+
+CUSTOM_COREPACK_IMAGE=node:18.15.0-alpine3.17-corepack
+
+corepack() {
+    docker run --rm -it \
+        -v $HOME/.cache/node/corepack:/root/.cache/node/corepack \
+        $CUSTOM_COREPACK_IMAGE corepack "$@"
+}
+
+yarn() {
+    docker run --rm -it \
+        -u $UID:$GID \
+        -w /work \
+        -v $PWD:/work \
+        -v $HOME/.yarn:/.yarn \
+        -v $HOME/.cache:/.cache \
+        -p 3000:3000 \
+        $CUSTOM_COREPACK_IMAGE yarn "$@"
+}
+
+npm() {
+    docker run --rm -it \
+        -u $UID:$GID \
+        -w /myapp \
+        -v $PWD:/myapp \
+        -v $HOME/.npm:/.npm \
+        -p 3000:3000 \
+        node:18.14.1 npm "$@"
+}
+
+npx() {
+    docker run --rm -it \
+        -u $UID:$GID \
+        -w /myapp \
+        -v $PWD:/myapp \
+        -v $HOME/.npm:/.npm \
+        -p 3000:3000 \
+        node:18.14.1 npx "$@"
+}
