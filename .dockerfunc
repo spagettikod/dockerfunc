@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-CUSTOM_COREPACK_IMAGE=node:18.15.0-alpine3.17-corepack
+CUSTOM_COREPACK_IMAGE=node:18.16.1-alpine3.18-corepack
 
 corepack() {
     docker run --rm -it \
@@ -28,7 +28,7 @@ npm() {
         -v $PWD:/myapp \
         -v $HOME/.npm:/.npm \
         -p 3000:3000 \
-        node:18.14.1 npm "$@"
+        $CUSTOM_COREPACK_IMAGE npm "$@"
 }
 
 npx() {
@@ -38,5 +38,11 @@ npx() {
         -v $PWD:/myapp \
         -v $HOME/.npm:/.npm \
         -p 3000:3000 \
-        node:18.14.1 npx "$@"
+        $CUSTOM_COREPACK_IMAGE npx "$@"
+}
+
+node() {
+    docker run --rm -it \
+        -u $UID:$GID \
+        $CUSTOM_COREPACK_IMAGE node "$@"
 }

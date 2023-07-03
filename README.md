@@ -11,5 +11,5 @@ cp .dockerfunc ~ && . ~/.dockerfunc
 
 Build corepack enabled compose:
 ```sh
-docker build --file Dockerfile-corepack --tag node:18.15.0-alpine3.17-corepack .
+docker build --file Dockerfile-corepack --tag node:18.16.1-alpine3.18-corepack .
 ```
